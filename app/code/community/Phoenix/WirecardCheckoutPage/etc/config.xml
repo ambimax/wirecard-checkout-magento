@@ -39,7 +39,7 @@
 <config>
     <modules>
         <Phoenix_WirecardCheckoutPage>
-            <version>3.6.4</version>
+            <version>3.6.7</version>
         </Phoenix_WirecardCheckoutPage>
     </modules>
     <global>
@@ -149,7 +149,7 @@
             <wirecard_checkout_page_cc>
                 <active>0</active>
                 <model>wirecard_checkout_page/cc</model>
-                <title>CreditCard</title>
+                <title>CreditCard / Maestro SecureCode</title>
                 <useIFrame>0</useIFrame>
                 <pci3DssSaqAEnable>0</pci3DssSaqAEnable>
                 <data_storage>1</data_storage>
@@ -224,20 +224,6 @@
                 <send_additional_data>0</send_additional_data>
                 <detect_layout>0</detect_layout>
             </wirecard_checkout_page_eps>
-            <wirecard_checkout_page_maestro>
-                <active>0</active>
-                <model>wirecard_checkout_page/maestro</model>
-                <title>Maestro SecureCode</title>
-                <useIFrame>0</useIFrame>
-                <allowspecific>0</allowspecific>
-                <customer_id>D200001</customer_id>
-                <secret_key>B8AKTPWBRMNBV455FG6M2DANE99WU2</secret_key>
-                <logo_url>images/logo.gif</logo_url>
-                <service_url>about-magento-demo-store</service_url>
-                <send_additional_data>0</send_additional_data>
-                <detect_layout>0</detect_layout>
-                <auto_deposit>0</auto_deposit>
-            </wirecard_checkout_page_maestro>
             <wirecard_checkout_page_pbx>
                 <active>0</active>
                 <model>wirecard_checkout_page/pbx</model>

@@ -140,7 +140,7 @@ class Phoenix_WirecardCheckoutPage_Helper_Data extends Mage_Payment_Helper_Data
         try {
 
             $response = $dataStorageInit->initiate($quoteId);
-Mage::log($response);
+
             if ($response->getStatus() == WirecardCEE_Client_DataStorage_Response_Initiation::STATE_SUCCESS) {
 
                 $storageId = $response->getStorageId();

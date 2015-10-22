@@ -269,7 +269,9 @@ function processResponse(response) {
             // fill in storageId
             $('payment_form_' + payment.currentMethod).select('input[type="hidden"]').each(function (el) {
                 if (el.name == 'payment[additional_data]') {
-                    el.value = response.response.storageId;
+                    if(typeof response.response.storageId !== 'undefined') {
+                        el.value = response.response.storageId;
+                    }
                     return false;
                 }
             });

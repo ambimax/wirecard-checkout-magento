@@ -263,7 +263,7 @@ class Phoenix_WirecardCheckoutPage_Model_Observer
                 return 'INSTALLMENT';
                 break;
             case 'wirecard_checkout_page_maestro':
-                return 'MAESTRO';
+                return 'CCARD';
                 break;
             case 'wirecard_checkout_page_moneta':
                 return 'MONETA';

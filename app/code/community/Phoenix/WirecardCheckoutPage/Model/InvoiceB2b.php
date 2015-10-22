@@ -96,7 +96,7 @@ class Phoenix_WirecardCheckoutPage_Model_InvoiceB2b extends Phoenix_WirecardChec
         }
 
         if (strlen($billingAddress->getCompany()))
-            return true;
+            return parent::isAvailable($quote);
 
         $vat_id = $billingAddress->getData('vat_id');
         if (!strlen($vat_id))

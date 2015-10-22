@@ -34,6 +34,7 @@
  * @package    Phoenix_WirecardCheckoutPage
  * @copyright  Copyright (c) 2008 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
  */
+
 class Phoenix_WirecardCheckoutPage_Block_Seamless_Script extends Mage_Core_Block_Template
 {
     protected $_dataStorageUrl;

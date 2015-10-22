@@ -89,6 +89,9 @@ class Phoenix_WirecardCheckoutPage_Block_Form extends Mage_Payment_Block_Form
             case 'CCMOTO':
                 return 'wirecard_checkout_page/seamless_CcMoto';
                 break;
+            case 'MAESTRO':
+                return 'wirecard_checkout_page/seamless_Maestro';
+                break;
             case 'C2P':
                 return 'wirecard_checkout_page/seamless_ClickTwoPay';
                 break;

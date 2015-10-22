@@ -58,7 +58,7 @@ abstract class Phoenix_WirecardCheckoutPage_Model_Abstract extends Mage_Payment_
     protected $_defaultLocale            = 'en';
 
     protected $_order;
-    protected $_pluginVersion        = '3.6.4';
+    protected $_pluginVersion        = '3.6.7';
     protected $_pluginName           = 'Phoenix/WirecardCheckoutPage';
 
     protected $_formBlockType = 'wirecard_checkout_page/form';
