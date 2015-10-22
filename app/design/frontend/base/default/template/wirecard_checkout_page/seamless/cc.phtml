@@ -1,0 +1,134 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * Shop System Plugins - Terms of use
+ *
+ * This terms of use regulates warranty and liability between
+ * Wirecard Central Eastern Europe (subsequently referred to as WDCEE)
+ * and it's contractual partners (subsequently referred to as customer or customers)
+ * which are related to the use of plugins provided by WDCEE.
+ * The Plugin is provided by WDCEE free of charge for it's customers and
+ * must be used for the purpose of WDCEE's payment platform integration only.
+ * It explicitly is not part of the general contract between WDCEE and it's customer.
+ * The plugin has successfully been tested under specific circumstances
+ * which are defined as the shopsystem's standard configuration (vendor's delivery state).
+ * The Customer is responsible for testing the plugin's functionality
+ * before putting it into production enviroment.
+ * The customer uses the plugin at own risk. WDCEE does not guarantee it's full
+ * functionality neither does WDCEE assume liability for any disadvantage related
+ * to the use of this plugin. By installing the plugin into the shopsystem the customer
+ * agrees to the terms of use. Please do not use this plugin if you do not agree to the terms of use!
+ *
+ * @category   Phoenix
+ * @package    Phoenix_WirecardCheckoutPage
+ * @copyright  Copyright (c) 2008 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+?>
+<?php
+    $_data = $this->getSessionData();
+    $isDataSaved = !empty($_data);
+    if (!$isDataSaved) {
+        $_data = array(
+            'cc_owner' => '',
+            'cc_type' => '',
+            'cc_number' => '',
+            'cc_exp_month' => '',
+            'cc_exp_year' => '',
+            'additional_data' => '',
+        );
+    }
+?>
+    <li id="wirecard_checkout_page_cc_saved_data" <?php echo ($isDataSaved ? '' : 'style="display:none;"'); ?>>
+        <ul>
+            <li>
+                <label><?php echo $this->__('Cardholder Name') ?></label><br />
+                <span id="cardholdername"><?php echo $_data['cc_owner'] ?></span>
+            </li>
+            <li>
+                <label><?php echo $this->__('Pan (for your protection only the last 4 numbers are saved)') ?></label><br />
+                <span id="anonymousPan"><?php echo $_data['cc_number'] ?></span>
+            </li>
+            <li>
+                <label><?php echo $this->__('Expiration date') ?></label><br />
+                <span id="expiry"><?php echo $_data['cc_exp_month'] . '/' . $_data['cc_exp_year'] ?></span>
+            </li>
+        </ul>
+        <a href="#payment" onclick="changePaymentData(); return false;"><?php echo $this->__('Change payment information') ?></a>
+    </li>
+    <li id="wirecard_checkout_page_cc_new_data" <?php echo ($isDataSaved ? 'style="display:none;"' : ''); ?>>
+        <ul>
+			<?php if($this->showCardholder()): ?>
+            <li>
+                <label for="wirecard_checkout_page_cc_cardholdername"><?php echo $this->__('Cardholder Name') ?> <span class="required">*</span></label><br />
+                <input type="text" title="<?php echo $this->__('Cardholder Name') ?>" class="required-entry input-text no-submit" id="wirecard_checkout_page_cc_cardholdername" name="wirecard_checkout_page_cc_cardholdername" value="" />
+            </li>
+			<?php endif; ?>
+            <li>
+                <label for="wirecard_checkout_page_cc_pan"><?php echo $this->__('Pan') ?> <span class="required">*</span></label><br />
+                <input type="text" title="<?php echo $this->__('Pan') ?>" class="required-entry input-text no-submit" id="wirecard_checkout_page_cc_pan" name="wirecard_checkout_page_cc_pan" value="" />
+            </li>
+            <li>
+                <label for="wirecard_checkout_page_cc_expirationMonth"><?php echo $this->__('Expiration date') ?> <span class="required">*</span></label><br />
+                <select id="wirecard_checkout_page_cc_expirationMonth" name="wirecard_checkout_page_cc_expirationMonth" class="required-entry no-submit month">
+                <?php $_ccExpMonth = $this->getInfoData('wirecard_checkout_page_cc_expirationMonth') ?>
+                <?php foreach ($this->getCcMonths() as $k=>$v): ?>
+                    <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                <?php endforeach ?>
+                </select>
+                <?php $_ccExpYear = $this->getInfoData('wirecard_checkout_page_cc_expirationYear') ?>
+                <select id="wirecard_checkout_page_cc_expirationYear" name="wirecard_checkout_page_cc_expirationYear" class="required-entry no-submit year">
+                <?php foreach ($this->getCcYears() as $k=>$v): ?>
+                    <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                <?php endforeach ?>
+                </select>
+            </li>
+			<?php if($this->showCvc()): ?>
+            <li>
+                <label for="wirecard_checkout_page_cc_cardVerifyCode"><?php echo $this->__('Card Verify Code') ?></label><br />
+                <input type="text" title="<?php echo $this->__('Card Verify Code') ?>" class="input-text cvv no-submit" id="wirecard_checkout_page_cc_cardVerifyCode" name="wirecard_checkout_page_cc_cardVerifyCode" value="" style="width:40px;"/>
+            </li>
+			<?php endif; ?>
+            <?php if($this->showIssueDate()): ?>
+            <li>
+                <label for="wirecard_checkout_page_cc_issueMonth"><?php echo $this->__('Issue date') ?></label><br />
+                <select id="wirecard_checkout_page_cc_issueMonth" name="wirecard_checkout_page_cc_issueMonth" class="no-submit month">
+                <?php $_ccIssMonth = $this->getInfoData('wirecard_checkout_page_cc_issueMonth') ?>
+                <?php foreach ($this->getCcMonths() as $k=>$v): ?>
+                    <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccIssMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                <?php endforeach ?>
+                </select>
+                <?php $_ccIssYear = $this->getInfoData('wirecard_checkout_page_cc_issueYear') ?>
+                <select id="wirecard_checkout_page_cc_issueYear" name="wirecard_checkout_page_cc_issueYear" class="no-submit year">
+                <?php foreach ($this->getSsStartYears() as $k=>$v): ?>
+                    <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccIssYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                <?php endforeach ?>
+                </select>
+            </li>
+            <?php endif; ?>
+            <?php if($this->showIssueNumber()): ?>
+            <li>
+                <label for="wirecard_checkout_page_cc_issueNumber"><?php echo $this->__('Card Issue Number') ?></label><br />
+                <input type="text" title="<?php echo $this->__('Card Issue Number') ?>" class="input-text cvv no-submit" id="wirecard_checkout_page_cc_issueNumber" name="wirecard_checkout_page_cc_issueNumber" value="" style="width:40px;"/>
+            </li>
+            <?php endif; ?>
+        </ul>
+    </li>
+    <input type="hidden" value="<?php echo ($isDataSaved ? '0' : '1'); ?>" name="wirecard_checkout_page_cc_new" id="wirecard_checkout_page_cc_new" autocomplete="off" />
+    <input type="hidden" value="<?php echo $_data['cc_owner'] ?>" name="payment[cc_owner]" autocomplete="off">
+    <input type="hidden" value="<?php echo $_data['cc_type'] ?>" name="payment[cc_type]" autocomplete="off">
+    <input type="hidden" value="<?php echo $_data['cc_number'] ?>" name="payment[cc_number]" autocomplete="off">
+    <input type="hidden" value="<?php echo $_data['cc_exp_month'] ?>" name="payment[cc_exp_month]" autocomplete="off">
+    <input type="hidden" value="<?php echo $_data['cc_exp_year'] ?>" name="payment[cc_exp_year]" autocomplete="off">
+    <input type="hidden" value="<?php echo $_data['additional_data'] ?>" name="payment[additional_data]" id="wirecard_checkout_page_cc_additional_data" autocomplete="off">
+    <input type="hidden" value="" name="wirecard_checkout_page_cc_seamless" id="wirecard_checkout_page_cc_seamless" autocomplete="off" />

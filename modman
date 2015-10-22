@@ -1,0 +1,12 @@
+skin/frontend/base/default/css/phoenix/wirecard_checkout_page skin/frontend/base/default/css/phoenix/wirecard_checkout_page
+skin/frontend/rwd/default/css/phoenix/wirecard_checkout_page skin/frontend/rwd/default/css/phoenix/wirecard_checkout_page
+js/phoenix/wirecard_checkout_page/processing.js js/phoenix/wirecard_checkout_page/processing.js
+app/code/local/WirecardCEE app/code/local/WirecardCEE
+app/code/community/Phoenix/WirecardCheckoutPage app/code/community/Phoenix/WirecardCheckoutPage
+app/etc/modules/Phoenix_WirecardCheckoutPage.xml app/etc/modules/Phoenix_WirecardCheckoutPage.xml
+app/locale/de_AT/Phoenix_WirecardCheckoutPage.csv app/locale/de_AT/Phoenix_WirecardCheckoutPage.csv
+app/locale/en_US/Phoenix_WirecardCheckoutPage.csv app/locale/en_US/Phoenix_WirecardCheckoutPage.csv
+app/locale/de_DE/Phoenix_WirecardCheckoutPage.csv app/locale/de_DE/Phoenix_WirecardCheckoutPage.csv
+app/design/adminhtml/default/default/template/wirecard_checkout_page app/design/adminhtml/default/default/template/wirecard_checkout_page
+app/design/frontend/base/default/template/wirecard_checkout_page app/design/frontend/base/default/template/wirecard_checkout_page
+app/design/frontend/base/default/layout/wirecard_checkout_page.xml app/design/frontend/base/default/layout/wirecard_checkout_page.xml

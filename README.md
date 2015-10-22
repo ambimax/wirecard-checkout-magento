@@ -1,0 +1,1 @@
+# wirecard-checkout-magento

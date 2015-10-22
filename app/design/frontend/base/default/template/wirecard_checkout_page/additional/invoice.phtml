@@ -1,0 +1,111 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * Shop System Plugins - Terms of use
+ *
+ * This terms of use regulates warranty and liability between
+ * Wirecard Central Eastern Europe (subsequently referred to as WDCEE)
+ * and it's contractual partners (subsequently referred to as customer or customers)
+ * which are related to the use of plugins provided by WDCEE.
+ * The Plugin is provided by WDCEE free of charge for it's customers and
+ * must be used for the purpose of WDCEE's payment platform integration only.
+ * It explicitly is not part of the general contract between WDCEE and it's customer.
+ * The plugin has successfully been tested under specific circumstances
+ * which are defined as the shopsystem's standard configuration (vendor's delivery state).
+ * The Customer is responsible for testing the plugin's functionality
+ * before putting it into production enviroment.
+ * The customer uses the plugin at own risk. WDCEE does not guarantee it's full
+ * functionality neither does WDCEE assume liability for any disadvantage related
+ * to the use of this plugin. By installing the plugin into the shopsystem the customer
+ * agrees to the terms of use. Please do not use this plugin if you do not agree to the terms of use!
+ *
+ * @category   Phoenix
+ * @package    Phoenix_WirecardCheckoutPage
+ * @copyright  Copyright (c) 2008 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+?>
+<li><label for="wirecard_checkout_page_invoice_dob_day" class="required"><em>*</em><?php echo $this->__('Date of Birth') ?></label>
+    <div class="input-box wirecard-checkout-page-dob customer-dob">
+        <div class="dob-day wirecard-checkout-page-invoice-dob-day">
+            <input type="text" id="wirecard_checkout_page_invoice_dob_day"
+                name="payment[wirecard_checkout_page_invoice_dob_day]"
+                value="<?php echo $this->getCustomerDobDay() ?>"
+                title="<?php echo $this->__('Day') ?>"
+                class="input-text validate-custom" /> <label
+                for="wirecard_checkout_page_invoice_dob_day"><?php echo $this->__('DD') ?></label>
+        </div>
+        <div class="dob-month wirecard-checkout-page-invoice-dob-month">
+            <input type="text" id="wirecard_checkout_page_invoice_dob_month"
+                name="payment[wirecard_checkout_page_invoice_dob_month]"
+                value="<?php echo $this->getCustomerDobMonth() ?>"
+                title="<?php echo $this->__('Month') ?>"
+                class="input-text validate-custom" /> <label
+                for="wirecard_checkout_page_invoice_dob_month"><?php echo $this->__('MM')  ?></label>
+        </div>
+        <div class="dob-year wirecard-checkout-page-invoice-dob-year">
+            <input type="text" id="wirecard_checkout_page_invoice_dob_year"
+                name="payment[wirecard_checkout_page_invoice_dob_year]"
+                value="<?php echo $this->getCustomerDobYear() ?>"
+                title="<?php echo $this->__('Year')  ?>"
+                class="input-text validate-custom" /> <label
+                for="wirecard_checkout_page_invoice_dob_year"><?php echo $this->__('YYYY') ?></label>
+        </div>
+        <div class="dob-full wirecard-checkout-page-invoice-dob-full" style="display: none;">
+            <input type="hidden" id="wirecard_checkout_page_invoice_dob_full"
+                name="payment[wirecard_checkout_page_invoice_dob]" />
+        </div>
+
+        <div class="validation-advice wirecard-checkout-page-invoice-validation-advice" id="wirecard_checkout_page_invoice_validation_advice" style="display: none;"></div>
+    </div>
+</li>
+
+<script type="text/javascript">
+    Translator.add('You have to be 18 years or older to use invoice payment.','<?php echo $this->__('You have to be 18 years or older to use invoice payment.')?>');
+</script> <script type="text/javascript">
+//<![CDATA[
+Varien.QINVDateElement = Class.create();
+Varien.QINVDateElement.prototype = Object.extend(new Varien.DateElement(), {
+    validateData: function() {
+        var year = this.fullDate.getFullYear();
+        var date = new Date;
+        this.curyear = date.getFullYear();
+        if(year <= 1899 || year >= this.curyear+1)
+        {
+            return false;
+        }
+        var today = new Date();
+        var limit = new Date((today.getFullYear() - 18), today.getMonth(), today.getDate());
+        var validateToYoung = this.fullDate <= limit;
+        this.validateDataErrorText = 'You have to be 18 years or older to use invoice payment.';
+        return validateToYoung;
+    }
+});
+Varien.QINVDOB = Class.create();
+Varien.QINVDOB.prototype = {
+    initialize: function(selector, required, format) {
+        var el = $(selector);
+        var container       = {};
+        container.day       = Element.select(el, '#wirecard_checkout_page_invoice_dob_day')[0];
+        container.month     = Element.select(el, '#wirecard_checkout_page_invoice_dob_month')[0];
+        container.year      = Element.select(el, '#wirecard_checkout_page_invoice_dob_year')[0];
+        container.full      = Element.select(el, '#wirecard_checkout_page_invoice_dob_full')[0];
+        container.advice    = Element.select(el, '#wirecard_checkout_page_invoice_validation_advice')[0];
+
+        new Varien.QINVDateElement('container', container, required, format);
+    }
+};
+
+var wirecard_checkout_page_invoice_customer_dob = new Varien.QINVDOB('#payment_form_wirecard_checkout_page_invoice', 'true', '%y-%m-%d');
+//]]>
+</script>

@@ -1,0 +1,19 @@
+<?php if($this->getDataStorageUrl()): ?>
+<script type="text/javascript" src="<?php echo $this->getDataStorageUrl(); ?>"></script>
+<?php endif; ?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js').'phoenix/wirecard_checkout_page/processing.js'; ?>"></script>
+<script type="text/javascript">
+    var wirecardCheckoutPageReadDatastorage = "<?php echo $this->getUrl('wirecard_checkout_page/processing/readDatastorage', array("_secure" => true)); ?>";
+    var wirecardCheckoutPageSaveSessInfo = "<?php echo $this->getUrl('wirecard_checkout_page/processing/saveSessInfo', array("_secure" => true)); ?>";
+    var wirecardCheckoutPageDeleteSessInfo = "<?php echo $this->getUrl('wirecard_checkout_page/processing/deleteSessInfo', array("_secure" => true)); ?>";
+    var qmoreIsIframe = "<?php echo $this->getUrl('wirecard_checkout_page/processing/isIframe', array("_secure" => true)); ?>";
+</script>
+<div class="window-overlay" id="window-overlay-qmore" style="display: none;"></div>
+<div id="qmore-iframe-div" style="display: none">
+    <div id="qmore-iframe-div-head">
+        <h3><?php echo $this->__("Payment processing"); ?></h3>
+    </div>
+    <div id="qmore-iframe-div-body">
+        <iframe src="about:blank" id="qmore-iframe"></iframe>
+    </div>
+</div>

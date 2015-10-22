@@ -1,0 +1,117 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * Shop System Plugins - Terms of use
+ * 
+ * This terms of use regulates warranty and liability between
+ * Wirecard Central Eastern Europe (subsequently referred to as WDCEE)
+ * and it's contractual partners (subsequently referred to as customer or customers)
+ * which are related to the use of plugins provided by WDCEE.
+ * The Plugin is provided by WDCEE free of charge for it's customers and
+ * must be used for the purpose of WDCEE's payment platform integration only.
+ * It explicitly is not part of the general contract between WDCEE and it's customer.
+ * The plugin has successfully been tested under specific circumstances
+ * which are defined as the shopsystem's standard configuration (vendor's delivery state).
+ * The Customer is responsible for testing the plugin's functionality
+ * before putting it into production enviroment.
+ * The customer uses the plugin at own risk. WDCEE does not guarantee it's full
+ * functionality neither does WDCEE assume liability for any disadvantage related
+ * to the use of this plugin. By installing the plugin into the shopsystem the customer
+ * agrees to the terms of use. Please do not use this plugin if you do not agree to the terms of use!
+ *
+ * @category   Phoenix
+ * @package    Phoenix_WirecardCheckoutPage
+ * @copyright  Copyright (c) 2008 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+?>
+<div class="box one-page-checkout-progress">
+        <h3><?php echo $this->__('Your Checkout Progress') ?></h3>
+    <ol>
+    <?php if ($this->getCheckout()->getStepData('billing', 'is_show')): ?>
+    <?php if ($this->getCheckout()->getStepData('billing', 'complete')): ?>
+        <li>
+            <h4 class="complete"><?php echo $this->__('Billing Address') ?></h4>
+            <div class="content">
+                <address><?php echo $this->getBilling()->format('html') ?></address>
+            </div>
+        </li>
+    <?php else: ?>
+        <li>
+            <h4><?php echo $this->__('Billing Address') ?></h4>
+        </li>
+    <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if ($this->getCheckout()->getStepData('shipping', 'is_show')): ?>
+    <?php if ($this->getCheckout()->getStepData('shipping', 'complete')): ?>
+        <li>
+            <h4 class="complete"><?php echo $this->__('Shipping Address') ?></h4>
+            <div class="content">
+                <address><?php echo $this->getShipping()->format('html') ?></address>
+            </div>
+        </li>
+    <?php else: ?>
+        <li>
+            <h4><?php echo $this->__('Shipping Address') ?></h4>
+        </li>
+    <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if ($this->getCheckout()->getStepData('shipping_method', 'is_show')): ?>
+    <?php if ($this->getCheckout()->getStepData('shipping_method', 'complete')): ?>
+        <li>
+            <h4 class="complete"><?php echo $this->__('Shipping Method') ?></h4>
+            <div class="content">
+            <?php if ($this->getShippingMethod()): ?>
+                <?php echo $this->getShippingDescription(); ?>
+
+                <?php $_excl = $this->getShippingPriceExclTax(); ?>
+                <?php $_incl = $this->getShippingPriceInclTax(); ?>
+                <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()): ?>
+                    <?php echo $_incl; ?>
+                <?php else: ?>
+                    <?php echo $_excl; ?>
+                <?php endif; ?>
+                <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                    (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                <?php endif; ?>
+
+            <?php else: ?>
+                <?php echo $this->__('Shipping method has not been selected yet') ?>
+            <?php endif ?>
+            </div>
+        </li>
+    <?php else: ?>
+        <li>
+            <h4><?php echo $this->__('Shipping Method') ?></h4>
+        </li>
+    <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if ($this->getCheckout()->getStepData('payment', 'is_show')): ?>
+    <?php if ($this->getCheckout()->getStepData('payment', 'complete')): ?>
+        <li>
+            <h4 class="complete"><?php echo $this->__('Payment Method') ?></h4>
+            <div class="content">
+                <?php echo $this->getPaymentHtml() ?>
+            </div>
+        </li>
+    <?php else: ?>
+        <li>
+            <h4><?php echo $this->__('Payment Method') ?></h4>
+        </li>
+    <?php endif; ?>
+    <?php endif; ?>
+    </ol>
+</div>
