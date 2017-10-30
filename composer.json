@@ -1,0 +1,22 @@
+{
+  "name": "netzkollektiv/wirecard-checkout-magento",
+  "minimum-stability": "dev",
+  "type": "magento-module",
+  "require": {
+    "php": ">=5.3.0",
+    "openmage/magento-lts": "1.9.3.x-dev"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.packagist.com/ambimax/"
+    },
+    {
+      "packagist.org": false
+    },
+    {
+      "type": "composer",
+      "url": "https://packages.ambimax.de"
+    }
+  ]
+}
